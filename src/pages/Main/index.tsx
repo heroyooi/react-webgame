@@ -1,6 +1,6 @@
+import { Link } from 'react-router-dom';
 // import commonStyles from '@/assets/styles/common.module.scss';
 import styles from '@/pages/Main/Main.module.scss';
-import { Link } from 'react-router-dom';
 
 function Main() {
   return (

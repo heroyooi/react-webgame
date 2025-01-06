@@ -4,6 +4,19 @@
   }
 }
 
+.commonBtn {
+  display: flex;
+  justify-content: center;
+  a {
+    display: block;
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .wrapper {
     .container {

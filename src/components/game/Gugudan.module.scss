@@ -1,3 +1,33 @@
 .gugudan {
-  color: red;
+  &__question {
+    margin-top: 30px;
+    padding: 10px;
+    border: 1px solid #dddddd;
+    background-color: #000;
+    color: #fff;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+  }
+  &__form {
+    display: flex;
+    margin-top: 10px;
+    &__input {
+      flex-grow: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+    }
+    &__button {
+      flex-shrink: 0;
+      padding: 10px;
+      border: 0;
+      border-radius: 3px;
+      background-color: #333;
+      color: #fff;
+    }
+  }
+  &__result {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: red;
+  }
 }
