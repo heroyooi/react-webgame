@@ -7,13 +7,17 @@
 .commonBtn {
   display: flex;
   justify-content: center;
-  a {
+  gap: 5px;
+  a,
+  button {
+    border: 0;
     display: block;
     padding: 10px;
     background-color: #000;
     color: #fff;
     border-radius: 5px;
     font-size: 14px;
+    cursor: pointer;
   }
 }
 

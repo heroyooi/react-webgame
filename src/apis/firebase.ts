@@ -1,27 +1,35 @@
 import { initializeApp } from 'firebase/app';
 import {
+  createUserWithEmailAndPassword,
   getAuth,
+  GithubAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
 } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
-const provider = new GoogleAuthProvider();
 
-export async function login() {
+export const socialLogin = (type) => async () => {
   try {
+    let provider = null;
+    if (type === 'google') {
+      provider = new GoogleAuthProvider();
+    } else if (type === 'github') {
+      provider = new GithubAuthProvider();
+    }
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
     console.log(user);
@@ -29,7 +37,24 @@ export async function login() {
   } catch (error) {
     console.error(error);
   }
-}
+};
+
+export const login = async (email, password) => {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const signup = async (email, password) => {
+  try {
+    console.log({ email, password });
+    await createUserWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export async function logout() {
   try {

@@ -13,4 +13,34 @@
       }
     }
   }
+  &__auth {
+    max-width: 720px;
+    margin: 30px auto 0;
+    &__tab {
+      display: flex;
+      margin-bottom: 30px;
+      border: 1px solid #ddd;
+      li {
+        width: 50%;
+        padding: 10px;
+        text-align: center;
+        padding: 10px;
+        border-left: 1px solid #ddd;
+        cursor: pointer;
+        &:first-child {
+          border-left: 0;
+        }
+        &.on {
+          background-color: #000;
+          color: #fff;
+        }
+      }
+    }
+    &__social,
+    &__general {
+      padding: 30px;
+      background-color: #efefef;
+      box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
+    }
+  }
 }
