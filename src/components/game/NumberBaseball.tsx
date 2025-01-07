@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
-import Try from './Try';
+import Try from './NumberBaseball/Try';
 import styles from '@/components/game/NumberBaseball.module.scss';
-import { TryInfo } from '@/types/try';
+import { TryInfo } from '@/types/numberbaseball';
 
 function getNumbers() {
   const candidates = [1, 2, 3, 4, 5, 6, 7, 8, 9];
