@@ -19,7 +19,7 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 const auth = getAuth();
 
 export const socialLogin = (type) => async () => {

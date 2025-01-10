@@ -12,7 +12,7 @@ const Table: FunctionComponent<Props> = ({ tableData, dispatch }) => {
       <tbody>
         {Array(tableData.length)
           .fill(null)
-          .map((tr, i) =>
+          .map((_, i) =>
             useMemo(
               () => (
                 <Tr

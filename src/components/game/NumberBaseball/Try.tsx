@@ -1,5 +1,5 @@
 import { memo, FunctionComponent } from 'react';
-import { TryProps } from '@/types/NumberBaseball';
+import { TryProps } from '@/types/numberbaseball';
 
 const Try: FunctionComponent<TryProps> = memo(({ tryInfo }) => {
   return (

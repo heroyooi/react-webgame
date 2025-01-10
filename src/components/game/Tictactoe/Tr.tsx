@@ -14,7 +14,7 @@ const Tr: FunctionComponent<Props> = ({ rowData, rowIndex, dispatch }) => {
     <tr>
       {Array(rowData.length)
         .fill(null)
-        .map((td, i) =>
+        .map((_, i) =>
           useMemo(
             () => (
               <Td

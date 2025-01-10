@@ -6,7 +6,7 @@ function getWinNumbers() {
   console.log('getWinNumbers');
   const candidate = Array(45)
     .fill(null)
-    .map((v, i) => i + 1);
+    .map((_, i) => i + 1);
   const shuffle = [];
   while (candidate.length > 0) {
     shuffle.push(
