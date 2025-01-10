@@ -96,6 +96,9 @@ function Main() {
                   <button onClick={socialLogin('github')}>
                     깃헙 로그인/회원가입
                   </button>
+                  <button onClick={socialLogin('facebook')}>
+                    페이스북 로그인/회원가입
+                  </button>
                 </div>
               </div>
             )}

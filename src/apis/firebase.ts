@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase/app';
 import {
   createUserWithEmailAndPassword,
   getAuth,
+  FacebookAuthProvider,
   GithubAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
@@ -29,8 +30,11 @@ export const socialLogin = (type) => async () => {
       provider = new GoogleAuthProvider();
     } else if (type === 'github') {
       provider = new GithubAuthProvider();
+    } else if (type === 'facebook') {
+      provider = new FacebookAuthProvider();
     }
     const result = await signInWithPopup(auth, provider);
+    console.log({result})
     const user = result.user;
     console.log(user);
     return user;
