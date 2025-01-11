@@ -1,3 +1,4 @@
+import { SocialProvider } from '@/types/firebase';
 import { initializeApp } from 'firebase/app';
 import {
   createUserWithEmailAndPassword,
@@ -9,6 +10,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  User,
 } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -23,27 +25,28 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 const auth = getAuth();
 
-export const socialLogin = (type) => async () => {
-  try {
-    let provider = null;
-    if (type === 'google') {
-      provider = new GoogleAuthProvider();
-    } else if (type === 'github') {
-      provider = new GithubAuthProvider();
-    } else if (type === 'facebook') {
-      provider = new FacebookAuthProvider();
+export const socialLogin =
+  (type: SocialProvider) => async (): Promise<User | null> => {
+    try {
+      let provider = null;
+      if (type === 'google') {
+        provider = new GoogleAuthProvider();
+      } else if (type === 'github') {
+        provider = new GithubAuthProvider();
+      } else if (type === 'facebook') {
+        provider = new FacebookAuthProvider();
+      }
+      const result = await signInWithPopup(auth, provider);
+      console.log({ result });
+      const user = result.user;
+      console.log(user);
+      return user;
+    } catch (error) {
+      console.error(error);
     }
-    const result = await signInWithPopup(auth, provider);
-    console.log({result})
-    const user = result.user;
-    console.log(user);
-    return user;
-  } catch (error) {
-    console.error(error);
-  }
-};
+  };
 
-export const login = async (email, password) => {
+export const login = async (email: string, password: string): Promise<void> => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
@@ -51,7 +54,10 @@ export const login = async (email, password) => {
   }
 };
 
-export const signup = async (email, password) => {
+export const signup = async (
+  email: string,
+  password: string
+): Promise<void> => {
   try {
     console.log({ email, password });
     await createUserWithEmailAndPassword(auth, email, password);
@@ -60,7 +66,7 @@ export const signup = async (email, password) => {
   }
 };
 
-export async function logout() {
+export async function logout(): Promise<void> {
   try {
     await signOut(auth);
     return null;
@@ -69,7 +75,7 @@ export async function logout() {
   }
 }
 
-export function onUserStateChange(callback) {
+export function onUserStateChange(callback: (user: User | null) => void): void {
   onAuthStateChanged(auth, (user) => {
     callback(user);
   });
