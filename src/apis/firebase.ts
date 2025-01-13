@@ -11,6 +11,7 @@ import {
   signInWithPopup,
   signOut,
   User,
+  UserCredential,
 } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -46,9 +47,13 @@ export const socialLogin =
     }
   };
 
-export const login = async (email: string, password: string): Promise<void> => {
+export const login = async (
+  email: string,
+  password: string
+): Promise<UserCredential> => {
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const user = await signInWithEmailAndPassword(auth, email, password);
+    return user;
   } catch (error) {
     console.error(error);
     throw error;
@@ -58,17 +63,17 @@ export const login = async (email: string, password: string): Promise<void> => {
 export const signup = async (
   email: string,
   password: string
-): Promise<void> => {
+): Promise<UserCredential> => {
   try {
-    console.log({ email, password });
-    await createUserWithEmailAndPassword(auth, email, password);
+    const user = await createUserWithEmailAndPassword(auth, email, password);
+    return user;
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
 
-export async function logout(): Promise<void> {
+export async function logout(): Promise<UserCredential> {
   try {
     await signOut(auth);
     return null;

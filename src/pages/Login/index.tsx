@@ -27,6 +27,11 @@ function Login() {
     }
   }, [id]);
 
+  useEffect(() => {
+    setEmail('');
+    setPassword('');
+  }, [authType]);
+
   const handleTab = (path: string) => () => {
     navigate(path);
   };
@@ -54,7 +59,9 @@ function Login() {
       } else if (fbError.code === 'auth/missing-password') {
         toastr.error('비밀번호가 틀렸습니다.');
       } else if (fbError.code === 'auth/invalid-credential') {
-        toastr.error('존재하지 않는 회원 정보입니다.');
+        toastr.error('이메일 혹은 비밀번호가 틀렸습니다.');
+      } else if (fbError.code === 'auth/email-already-in-use') {
+        toastr.error('이미 사용하고 있는 이메일입니다.');
       } else if (fbError.code === 'auth/too-many-requests') {
         toastr.error(
           '이 계정에 대한 액세스가 일시적으로 비활성화되었으므로 암호를 설정하거나 나중에 다시 시도하십시오.'
@@ -118,14 +125,14 @@ function Login() {
               <div>
                 <form onSubmit={handleSubmit}>
                   <input
-                    type='email'
-                    placeholder='이메일을 입력해주세요.'
+                    type="email"
+                    placeholder="이메일을 입력해주세요."
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <input
-                    type='password'
-                    placeholder='비밀번호를 입력해주세요.'
+                    type="password"
+                    placeholder="비밀번호를 입력해주세요."
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
@@ -137,14 +144,14 @@ function Login() {
               <div>
                 <form onSubmit={handleSubmit}>
                   <input
-                    type='email'
-                    placeholder='이메일을 입력해주세요.'
+                    type="email"
+                    placeholder="이메일을 입력해주세요."
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <input
-                    type='password'
-                    placeholder='비밀번호를 입력해주세요.'
+                    type="password"
+                    placeholder="비밀번호를 입력해주세요."
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
