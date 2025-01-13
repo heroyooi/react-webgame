@@ -48,7 +48,9 @@ function Login() {
     try {
       const user = await socialLogin(provider)();
       console.log('로그인 성공 : ', user);
-      navigate('/');
+      if (user) {
+        navigate('/');
+      }
     } catch (error) {
       console.error('로그인 실패 : ', error);
     }
