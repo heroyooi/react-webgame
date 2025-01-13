@@ -26,14 +26,18 @@ function Login() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
+      let user = null;
+      let signedUser = null;
       if (authType === 'login') {
-        const user = await login(email, password);
-        console.log('로그인 성공 : ', user);
+        user = await login(email, password);
+        console.log('로그인 결과 : ', user);
       } else if (authType === 'signup') {
-        const signedUser = await signup(email, password);
-        console.log('회원가입 성공 : ', signedUser);
+        signedUser = await signup(email, password);
+        console.log('회원가입 결과 : ', signedUser);
       }
-      navigate('/');
+      if (user || signedUser) {
+        navigate('/');
+      }
     } catch (error) {
       console.error(error);
     }
@@ -84,12 +88,10 @@ function Login() {
         )}
         {id == 'general' && (
           <div className={styles.page__auth__general}>
-            {authType == '' && (
-              <div className={commonStyles.commonBtn}>
-                <button onClick={() => setAuthType('login')}>로그인</button>
-                <button onClick={() => setAuthType('signup')}>회원가입</button>
-              </div>
-            )}
+            <div className={commonStyles.commonBtn}>
+              <button onClick={() => setAuthType('login')}>로그인</button>
+              <button onClick={() => setAuthType('signup')}>회원가입</button>
+            </div>
             {authType == 'login' && (
               <div>
                 <form onSubmit={handleSubmit}>
