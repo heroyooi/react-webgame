@@ -4,6 +4,14 @@ import styles from './Login.module.scss';
 import commonStyles from '@/assets/styles/common.module.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthType, SocialProvider } from '@/types/firebase';
+import { FirebaseError } from 'firebase/app';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
+
+toastr.options = {
+  timeOut: 2000,
+  positionClass: 'toast-bottom-center',
+};
 
 function Login() {
   const { id } = useParams<{ id?: string }>();
@@ -39,7 +47,19 @@ function Login() {
         navigate('/');
       }
     } catch (error) {
-      console.error(error);
+      const fbError = error as FirebaseError;
+      console.log(fbError.code);
+      if (fbError.code === 'auth/invalid-email') {
+        toastr.error('유효하지 않은 이메일입니다.');
+      } else if (fbError.code === 'auth/missing-password') {
+        toastr.error('비밀번호가 틀렸습니다.');
+      } else if (fbError.code === 'auth/invalid-credential') {
+        toastr.error('존재하지 않는 회원 정보입니다.');
+      } else if (fbError.code === 'auth/too-many-requests') {
+        toastr.error(
+          '이 계정에 대한 액세스가 일시적으로 비활성화되었으므로 암호를 설정하거나 나중에 다시 시도하십시오.'
+        );
+      }
     }
   };
 
@@ -98,14 +118,14 @@ function Login() {
               <div>
                 <form onSubmit={handleSubmit}>
                   <input
-                    type="email"
-                    placeholder="이메일을 입력해주세요."
+                    type='email'
+                    placeholder='이메일을 입력해주세요.'
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <input
-                    type="password"
-                    placeholder="비밀번호를 입력해주세요."
+                    type='password'
+                    placeholder='비밀번호를 입력해주세요.'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
@@ -117,14 +137,14 @@ function Login() {
               <div>
                 <form onSubmit={handleSubmit}>
                   <input
-                    type="email"
-                    placeholder="이메일을 입력해주세요."
+                    type='email'
+                    placeholder='이메일을 입력해주세요.'
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <input
-                    type="password"
-                    placeholder="비밀번호를 입력해주세요."
+                    type='password'
+                    placeholder='비밀번호를 입력해주세요.'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
