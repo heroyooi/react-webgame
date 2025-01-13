@@ -42,7 +42,7 @@ export const socialLogin =
       console.log(user);
       return user;
     } catch (error) {
-      console.error(error);
+      throw error;
     }
   };
 
@@ -51,6 +51,7 @@ export const login = async (email: string, password: string): Promise<void> => {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
     console.error(error);
+    throw error;
   }
 };
 
@@ -63,6 +64,7 @@ export const signup = async (
     await createUserWithEmailAndPassword(auth, email, password);
   } catch (error) {
     console.error(error);
+    throw error;
   }
 };
 
@@ -72,6 +74,7 @@ export async function logout(): Promise<void> {
     return null;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 
