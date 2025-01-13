@@ -1,7 +1,14 @@
 import { Outlet } from 'react-router-dom';
+import toastr from 'toastr';
 import Header from '@/components/common/Header';
-import styles from '@/assets/styles/common.module.scss';
 import { AuthContextProvider } from '@/contexts/AuthContext';
+import styles from '@/assets/styles/common.module.scss';
+import 'toastr/build/toastr.min.css';
+
+toastr.options = {
+  timeOut: 2000,
+  positionClass: 'toast-bottom-center',
+};
 
 function App() {
   return (

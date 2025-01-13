@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   Gugudan,
   WordRelay,
@@ -10,9 +10,19 @@ import {
   MineSearch,
 } from '@/components/game';
 import commonStyles from '@/assets/styles/common.module.scss';
+import { useAuthContext } from '@/contexts/AuthContext';
+import { useEffect } from 'react';
 
 function Game() {
+  const navigate = useNavigate();
+  const { user } = useAuthContext();
   const { id } = useParams();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+  }, [user]);
 
   function GameTitle(id) {
     switch (id) {
@@ -62,7 +72,7 @@ function Game() {
       <h2>{GameTitle(id)}</h2>
       {GameMatcher(id)}
       <div className={commonStyles.commonBtn}>
-        <Link to='/'>메인으로 가기</Link>
+        <Link to="/">메인으로 가기</Link>
       </div>
     </div>
   );

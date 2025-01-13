@@ -4,14 +4,6 @@ import styles from './Login.module.scss';
 import commonStyles from '@/assets/styles/common.module.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthType, SocialProvider } from '@/types/firebase';
-import { FirebaseError } from 'firebase/app';
-import toastr from 'toastr';
-import 'toastr/build/toastr.min.css';
-
-toastr.options = {
-  timeOut: 2000,
-  positionClass: 'toast-bottom-center',
-};
 
 function Login() {
   const { id } = useParams<{ id?: string }>();
@@ -51,23 +43,7 @@ function Login() {
       if (user || signedUser) {
         navigate('/');
       }
-    } catch (error) {
-      const fbError = error as FirebaseError;
-      console.log(fbError.code);
-      if (fbError.code === 'auth/invalid-email') {
-        toastr.error('유효하지 않은 이메일입니다.');
-      } else if (fbError.code === 'auth/missing-password') {
-        toastr.error('비밀번호가 틀렸습니다.');
-      } else if (fbError.code === 'auth/invalid-credential') {
-        toastr.error('이메일 혹은 비밀번호가 틀렸습니다.');
-      } else if (fbError.code === 'auth/email-already-in-use') {
-        toastr.error('이미 사용하고 있는 이메일입니다.');
-      } else if (fbError.code === 'auth/too-many-requests') {
-        toastr.error(
-          '이 계정에 대한 액세스가 일시적으로 비활성화되었으므로 암호를 설정하거나 나중에 다시 시도하십시오.'
-        );
-      }
-    }
+    } catch (error) {}
   };
 
   const handleSocialLogin = (provider: SocialProvider) => async (e) => {
@@ -78,9 +54,7 @@ function Login() {
       if (user) {
         navigate('/');
       }
-    } catch (error) {
-      console.error('로그인 실패 : ', error);
-    }
+    } catch (error) {}
   };
 
   return (
