@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import cx from 'classnames';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { AuthType, SocialProvider } from '@/types/firebase';
@@ -7,18 +8,26 @@ import commonStyles from '@/assets/styles/common.module.scss';
 import styles from './Login.module.scss';
 
 function Login() {
+  const queryClient = useQueryClient();
   const { id } = useParams<{ id?: string }>();
   const navigate = useNavigate();
-  const { socialLogin, login, signup } = useAuthContext();
+  const { socialLogin, login, signup, user } = useAuthContext();
   const [authType, setAuthType] = useState<AuthType>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [nickname, setNickname] = useState<string>('');
 
   useEffect(() => {
     if (id == undefined) {
       navigate('/login/social');
     }
   }, [id]);
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user]);
 
   useEffect(() => {
     setEmail('');
@@ -38,11 +47,19 @@ function Login() {
         user = await login(email, password);
         console.log('로그인 결과 : ', user);
       } else if (authType === 'signup') {
-        signedUser = await signup(email, password);
+        if (nickname.trim() !== '') {
+          signedUser = await signup(email, password, nickname.trim());
+        } else {
+          signedUser = await signup(email, password);
+        }
+
         console.log('회원가입 결과 : ', signedUser);
       }
       if (user || signedUser) {
         navigate('/');
+        queryClient.invalidateQueries({
+          queryKey: ['user'],
+        });
       }
     } catch (error) {}
   };
@@ -54,6 +71,9 @@ function Login() {
       console.log('로그인 성공 : ', user);
       if (user) {
         navigate('/');
+        queryClient.invalidateQueries({
+          queryKey: ['user'],
+        });
       }
     } catch (error) {}
   };
@@ -125,16 +145,23 @@ function Login() {
                   <input
                     className={commonStyles.commonInput}
                     type='email'
-                    placeholder='이메일을 입력해주세요.'
+                    placeholder='이메일을 입력해주세요. - 필수'
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <input
                     className={commonStyles.commonInput}
                     type='password'
-                    placeholder='비밀번호를 입력해주세요.'
+                    placeholder='비밀번호를 입력해주세요. - 필수'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <input
+                    className={commonStyles.commonInput}
+                    type='text'
+                    placeholder='닉네임를 입력해주세요. - 선택'
+                    value={nickname}
+                    onChange={(e) => setNickname(e.target.value)}
                   />
                   <div className={cx(commonStyles.commonBtn, styles.btnArea)}>
                     <button>일반 회원가입</button>

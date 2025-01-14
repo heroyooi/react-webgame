@@ -12,6 +12,7 @@ import {
   signOut,
   User,
   UserCredential,
+  updateProfile,
 } from 'firebase/auth';
 import toastr from 'toastr';
 
@@ -20,12 +21,12 @@ const firebaseConfig = {
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_SENDER_ID,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 initializeApp(firebaseConfig);
-const auth = getAuth();
+export const auth = getAuth();
 
 export const socialLogin =
   (type: SocialProvider) => async (): Promise<User | null> => {
@@ -129,11 +130,17 @@ export const login = async (
 
 export const signup = async (
   email: string,
-  password: string
+  password: string,
+  nickname?: string
 ): Promise<User | null> => {
   try {
     const result = await createUserWithEmailAndPassword(auth, email, password);
     const user = result.user;
+
+    if (nickname && user) {
+      await updateProfile(user, { displayName: nickname });
+    }
+
     return user;
   } catch (error) {
     // throw error;
@@ -179,3 +186,9 @@ export function onUserStateChange(callback: (user: User | null) => void): void {
     callback(user);
   });
 }
+
+export const fetchUser = (): Promise<User | null> => {
+  return new Promise((resolve) => {
+    onUserStateChange((user) => resolve(user));
+  });
+};
