@@ -108,6 +108,9 @@ export const login = async (
       case 'auth/missing-password':
         toastr.error('잘못된 비밀번호입니다.');
         break;
+      case 'auth/invalid-credential':
+        toastr.error('유효하지 않은 계정입니다.');
+        break;
       case 'auth/network-request-failed':
         toastr.error(
           '네트워크 오류가 발생했습니다. 인터넷 연결을 확인해주세요.'

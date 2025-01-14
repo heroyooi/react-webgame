@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import cx from 'classnames';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { AuthType, SocialProvider } from '@/types/firebase';
 import commonStyles from '@/assets/styles/common.module.scss';
@@ -99,18 +100,22 @@ function Login() {
               <div>
                 <form onSubmit={handleSubmit}>
                   <input
-                    type="email"
-                    placeholder="이메일을 입력해주세요."
+                    className={commonStyles.commonInput}
+                    type='email'
+                    placeholder='이메일을 입력해주세요.'
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <input
-                    type="password"
-                    placeholder="비밀번호를 입력해주세요."
+                    className={commonStyles.commonInput}
+                    type='password'
+                    placeholder='비밀번호를 입력해주세요.'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  <button>일반 로그인</button>
+                  <div className={cx(commonStyles.commonBtn, styles.btnArea)}>
+                    <button>일반 로그인</button>
+                  </div>
                 </form>
               </div>
             )}
@@ -118,18 +123,22 @@ function Login() {
               <div>
                 <form onSubmit={handleSubmit}>
                   <input
-                    type="email"
-                    placeholder="이메일을 입력해주세요."
+                    className={commonStyles.commonInput}
+                    type='email'
+                    placeholder='이메일을 입력해주세요.'
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <input
-                    type="password"
-                    placeholder="비밀번호를 입력해주세요."
+                    className={commonStyles.commonInput}
+                    type='password'
+                    placeholder='비밀번호를 입력해주세요.'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  <button>일반 회원가입</button>
+                  <div className={cx(commonStyles.commonBtn, styles.btnArea)}>
+                    <button>일반 회원가입</button>
+                  </div>
                 </form>
               </div>
             )}
