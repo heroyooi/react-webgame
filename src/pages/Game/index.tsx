@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   Gugudan,
@@ -9,9 +10,8 @@ import {
   Tictactoe,
   MineSearch,
 } from '@/components/game';
-import commonStyles from '@/assets/styles/common.module.scss';
 import { useAuthContext } from '@/contexts/AuthContext';
-import { useEffect } from 'react';
+import commonStyles from '@/assets/styles/common.module.scss';
 
 function Game() {
   const navigate = useNavigate();

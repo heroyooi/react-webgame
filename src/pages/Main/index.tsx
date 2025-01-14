@@ -1,8 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom';
-import commonStyles from '@/assets/styles/common.module.scss';
-import styles from '@/pages/Main/Main.module.scss';
-import { useAuthContext } from '@/contexts/AuthContext';
 import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthContext } from '@/contexts/AuthContext';
+import styles from '@/pages/Main/Main.module.scss';
 
 function Main() {
   const navigate = useNavigate();

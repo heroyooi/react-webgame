@@ -1,9 +1,9 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { useAuthContext } from '@/contexts/AuthContext';
-import styles from './Login.module.scss';
-import commonStyles from '@/assets/styles/common.module.scss';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useAuthContext } from '@/contexts/AuthContext';
 import { AuthType, SocialProvider } from '@/types/firebase';
+import commonStyles from '@/assets/styles/common.module.scss';
+import styles from './Login.module.scss';
 
 function Login() {
   const { id } = useParams<{ id?: string }>();
