@@ -87,9 +87,10 @@ export const socialLogin =
 export const login = async (
   email: string,
   password: string
-): Promise<UserCredential | null> => {
+): Promise<User | null> => {
   try {
-    const user = await signInWithEmailAndPassword(auth, email, password);
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    const user = result.user;
     return user;
   } catch (error) {
     // throw error;
@@ -126,9 +127,10 @@ export const login = async (
 export const signup = async (
   email: string,
   password: string
-): Promise<UserCredential | null> => {
+): Promise<User | null> => {
   try {
-    const user = await createUserWithEmailAndPassword(auth, email, password);
+    const result = await createUserWithEmailAndPassword(auth, email, password);
+    const user = result.user;
     return user;
   } catch (error) {
     // throw error;
@@ -159,7 +161,7 @@ export const signup = async (
   }
 };
 
-export async function logout(): Promise<UserCredential> {
+export async function logout(): Promise<UserCredential | null> {
   try {
     await signOut(auth);
     return null;
