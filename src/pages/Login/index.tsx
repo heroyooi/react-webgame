@@ -32,6 +32,7 @@ function Login() {
   useEffect(() => {
     setEmail('');
     setPassword('');
+    setNickname('');
   }, [authType]);
 
   const handleTab = (path: string) => () => {
@@ -58,7 +59,7 @@ function Login() {
       if (user || signedUser) {
         navigate('/');
         queryClient.invalidateQueries({
-          queryKey: ['user'],
+          queryKey: ['user', 'me'],
         });
       }
     } catch (error) {}
@@ -72,7 +73,7 @@ function Login() {
       if (user) {
         navigate('/');
         queryClient.invalidateQueries({
-          queryKey: ['user'],
+          queryKey: ['user', 'me'],
         });
       }
     } catch (error) {}

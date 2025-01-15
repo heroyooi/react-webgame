@@ -7,7 +7,7 @@ const AuthContext = createContext(null);
 export function AuthContextProvider({ children }) {
   // const [user, setUser] = useState<any>();
   const { data: isUser } = useQuery({
-    queryKey: ['user'],
+    queryKey: ['user', 'me'],
     queryFn: fetchUser,
     staleTime: 300 * 1000, // 기본 설정은 0 (fresh -> stale)
     gcTime: 300 * 1000, // 기본 값이 300 * 1000, 5분임

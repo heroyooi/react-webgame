@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import cx from 'classnames';
@@ -12,7 +11,7 @@ export default function Header() {
   const handleLogout = async () => {
     await logout();
     await queryClient.invalidateQueries({
-      queryKey: ['user'],
+      queryKey: ['user', 'me'],
     });
   };
 

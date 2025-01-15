@@ -26,7 +26,7 @@ const firebaseConfig = {
 };
 
 initializeApp(firebaseConfig);
-export const auth = getAuth();
+const auth = getAuth();
 
 export const socialLogin =
   (type: SocialProvider) => async (): Promise<User | null> => {
