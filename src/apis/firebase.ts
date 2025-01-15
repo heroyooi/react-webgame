@@ -11,9 +11,15 @@ import {
   signInWithPopup,
   signOut,
   User,
-  UserCredential,
   updateProfile,
 } from 'firebase/auth';
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  deleteDoc,
+} from 'firebase/firestore';
 import toastr from 'toastr';
 
 const firebaseConfig = {
@@ -25,8 +31,9 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 const auth = getAuth();
+const database = getFirestore(app);
 
 export const socialLogin =
   (type: SocialProvider) => async (): Promise<User | null> => {
@@ -47,6 +54,26 @@ export const socialLogin =
 
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+
+      if (user) {
+        const userDocRef = doc(database, 'users', user.uid);
+        const userDocSnap = await getDoc(userDocRef);
+        if (!userDocSnap.exists()) {
+          await setDoc(userDocRef, {
+            email: user.email,
+            displayName: user.displayName || null,
+            createdAt: new Date().toISOString(),
+            lastLogin: new Date().toISOString(),
+          });
+        } else {
+          await setDoc(
+            userDocRef,
+            { lastLogin: new Date().toISOString() },
+            { merge: true }
+          );
+        }
+      }
+
       return user;
     } catch (error) {
       // throw error;
@@ -92,6 +119,28 @@ export const login = async (
   try {
     const result = await signInWithEmailAndPassword(auth, email, password);
     const user = result.user;
+
+    if (user) {
+      const userDocRef = doc(database, 'users', user.uid);
+      const userDocSnap = await getDoc(userDocRef);
+
+      if (!userDocSnap.exists()) {
+        await setDoc(userDocRef, {
+          email: user.email,
+          displayName: user.displayName || null,
+          lastLogin: new Date().toISOString(),
+        });
+      } else {
+        await setDoc(
+          userDocRef,
+          {
+            lastLogin: new Date().toISOString(),
+          },
+          { merge: true } // 기존 데이터에 병합
+        );
+      }
+    }
+
     return user;
   } catch (error) {
     // throw error;
@@ -141,6 +190,13 @@ export const signup = async (
       await updateProfile(user, { displayName: nickname });
     }
 
+    await setDoc(doc(database, 'users', user.uid), {
+      email: user.email,
+      displayName: nickname || null,
+      createdAt: new Date().toISOString(),
+      lastLogin: new Date().toISOString(),
+    });
+
     return user;
   } catch (error) {
     // throw error;
@@ -171,19 +227,40 @@ export const signup = async (
   }
 };
 
-export async function logout(): Promise<UserCredential | null> {
+export async function logout(): Promise<void> {
   try {
+    const user = auth.currentUser;
+    if (user) {
+      const sessionRef = doc(database, 'sessions', user.uid);
+      await deleteDoc(sessionRef);
+    }
+
     await signOut(auth);
-    return null;
   } catch (error) {
-    console.error(error);
+    console.error('로그아웃 에러 : ', error);
     throw error;
   }
 }
 
+async function getUserDataFromFirestore(uid: string) {
+  const userDocRef = doc(database, 'users', uid);
+  const userDocSnap = await getDoc(userDocRef);
+
+  if (userDocSnap.exists()) {
+    return { uid, ...userDocSnap.data() };
+  } else {
+    return null;
+  }
+}
+
 export function onUserStateChange(callback: (user: User | null) => void): void {
-  onAuthStateChanged(auth, (user) => {
-    callback(user);
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const userData = await getUserDataFromFirestore(user.uid);
+      callback(userData ? { ...user, ...userData } : user);
+    } else {
+      callback(null);
+    }
   });
 }
 

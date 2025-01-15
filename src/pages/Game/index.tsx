@@ -15,14 +15,14 @@ import commonStyles from '@/assets/styles/common.module.scss';
 
 function Game() {
   const navigate = useNavigate();
-  const { user } = useAuthContext();
+  const { user, isLoading } = useAuthContext();
   const { id } = useParams();
 
   useEffect(() => {
-    if (!user) {
+    if (!isLoading && !user) {
       navigate('/login');
     }
-  }, [user]);
+  }, [user, isLoading]);
 
   function GameTitle(id) {
     switch (id) {
@@ -72,7 +72,7 @@ function Game() {
       <h2>{GameTitle(id)}</h2>
       {GameMatcher(id)}
       <div className={commonStyles.commonBtn}>
-        <Link to="/">메인으로 가기</Link>
+        <Link to='/'>메인으로 가기</Link>
       </div>
     </div>
   );

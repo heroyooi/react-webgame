@@ -11,7 +11,7 @@ function Login() {
   const queryClient = useQueryClient();
   const { id } = useParams<{ id?: string }>();
   const navigate = useNavigate();
-  const { socialLogin, login, signup, user } = useAuthContext();
+  const { socialLogin, login, signup, user, isLoading } = useAuthContext();
   const [authType, setAuthType] = useState<AuthType>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -24,10 +24,10 @@ function Login() {
   }, [id]);
 
   useEffect(() => {
-    if (user) {
+    if (!isLoading && user) {
       navigate('/');
     }
-  }, [user]);
+  }, [user, isLoading]);
 
   useEffect(() => {
     setEmail('');

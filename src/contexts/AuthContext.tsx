@@ -6,7 +6,11 @@ const AuthContext = createContext(null);
 
 export function AuthContextProvider({ children }) {
   // const [user, setUser] = useState<any>();
-  const { data: isUser } = useQuery({
+  const {
+    data: isUser,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ['user', 'me'],
     queryFn: fetchUser,
     staleTime: 300 * 1000, // 기본 설정은 0 (fresh -> stale)
@@ -22,6 +26,8 @@ export function AuthContextProvider({ children }) {
       value={{
         user: isUser,
         uid: isUser && isUser.uid,
+        isLoading,
+        isError,
         socialLogin,
         login,
         logout,

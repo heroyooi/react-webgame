@@ -2,10 +2,16 @@ import { Outlet } from 'react-router-dom';
 import toastr from 'toastr';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/ko';
 import Header from '@/components/common/Header';
 import { AuthContextProvider } from '@/contexts/AuthContext';
 import styles from '@/assets/styles/common.module.scss';
 import 'toastr/build/toastr.min.css';
+
+dayjs.locale('ko');
+dayjs.extend(relativeTime);
 
 toastr.options = {
   timeOut: 2000,
