@@ -7,7 +7,6 @@ import cx from 'classnames';
 import commonStyles from '@/assets/styles/common.module.scss';
 import styles from './Profile.module.scss';
 import { useQueryClient } from '@tanstack/react-query';
-import toastr from 'toastr';
 import Modal from '@/components/ui/Modal';
 
 function Profile() {

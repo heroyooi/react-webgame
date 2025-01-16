@@ -1,12 +1,12 @@
 import { getUsers } from '@/apis/firebase';
 import Loading from '@/components/ui/Loading';
 import styles from '@/pages/Main/Main.module.scss';
-import { User } from '@/types/firebase';
+import { IUser } from '@/types/firebase';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function UsersList() {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<IUser[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
