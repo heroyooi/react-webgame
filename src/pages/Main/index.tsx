@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '@/contexts/AuthContext';
 import styles from '@/pages/Main/Main.module.scss';
+import UsersList from '@/components/main/UsersList';
 
 function Main() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ function Main() {
         해당 서비스는 리액트 교육 목적으로 제작 되었습니다.
       </p>
 
+      <h3 className={styles.page__title}>게임 목록</h3>
       <ul className={styles.page__list}>
         <li>
           <Link to='/game/gugudan'>- 구구단</Link>
@@ -45,6 +47,8 @@ function Main() {
           <Link to='/game/mine-search'>- 지뢰찾기</Link>
         </li>
       </ul>
+      <h3 className={styles.page__title}>회원 목록</h3>
+      <UsersList />
     </div>
   );
 }

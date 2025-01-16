@@ -26,9 +26,9 @@ export default function Header() {
       <div className={cx(styles.header__utilmenu, commonStyles.commonBtn)}>
         {user ? (
           <>
-            {user.displayName && (
-              <Link to='/profile'>{user.displayName}님 반갑습니다.</Link>
-            )}
+            <Link to='/profile'>
+              {user.displayName ?? '방문자'}님 반갑습니다.
+            </Link>
             <button onClick={handleLogout}>로그아웃</button>
           </>
         ) : (

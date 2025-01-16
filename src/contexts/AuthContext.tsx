@@ -1,6 +1,13 @@
 import { createContext, useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { socialLogin, login, logout, signup, fetchUser } from '@apis/firebase';
+import {
+  socialLogin,
+  login,
+  logout,
+  signup,
+  fetchUser,
+  removeUser,
+} from '@apis/firebase';
 
 const AuthContext = createContext(null);
 
@@ -32,6 +39,7 @@ export function AuthContextProvider({ children }) {
         login,
         logout,
         signup,
+        removeUser,
       }}
     >
       {children}

@@ -1,5 +1,6 @@
 .page {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     padding: 30px;
     width: 720px;
@@ -24,8 +25,38 @@
                     flex-grow: 1;
                 }
             }
-            
         }   
     }
-    
+    &__btn {
+        margin-top: 10px;
+        width: 100%;
+        button {
+            width: 100%;
+        }
+    }
+    .btnArea {
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-radius: 4px;
+            margin-top: 10px;
+            &:first-child {
+                background-color: #007bff;
+                color: white;
+                &:hover {
+                background-color: #0056b3;
+                }
+            }
+            &:last-child {
+                background-color: #f8f9fa;
+                color: #333;
+                &:hover {
+                background-color: #e2e6ea;
+                }
+            }
+        }
+    }
 }
