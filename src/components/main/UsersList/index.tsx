@@ -1,7 +1,7 @@
 import { getUsers } from '@/apis/firebase';
 import Loading from '@/components/ui/Loading';
 import styles from '@/pages/Main/Main.module.scss';
-import { User } from '@/types/firebase';
+import { User } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 

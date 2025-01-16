@@ -277,13 +277,13 @@ export function fetchUser(): Promise<User | null> {
   });
 }
 
-export async function getUsers() {
+export async function getUsers(): Promise<User[]> {
   const usersCollectionRef = collection(database, 'users');
   const usersSnapshot = await getDocs(usersCollectionRef);
 
   const users = usersSnapshot.docs.map((doc) => ({
     id: doc.id,
-    ...doc.data(),
+    ...(doc.data() as User),
   }));
 
   return users;
