@@ -1,4 +1,4 @@
-import { SocialProvider } from '@/types/firebase';
+import { IUser, SocialProvider } from '@/types/firebase';
 import { FirebaseError, initializeApp } from 'firebase/app';
 import {
   createUserWithEmailAndPassword,
@@ -277,14 +277,22 @@ export function fetchUser(): Promise<User | null> {
   });
 }
 
-export async function getUsers(): Promise<User[]> {
+export async function getUsers(): Promise<IUser[]> {
   const usersCollectionRef = collection(database, 'users');
   const usersSnapshot = await getDocs(usersCollectionRef);
 
-  const users = usersSnapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...(doc.data() as User),
-  }));
+  const users = usersSnapshot.docs.map((doc) => {
+    const data = doc.data();
+
+    return {
+      id: doc.id,
+      // ...doc.data(),
+      email: data.email || '',
+      createdAt: data.createdAt || null,
+      displayName: data.displayName || null,
+      lastLogin: data.lastLogin || null,
+    };
+  });
 
   return users;
 }

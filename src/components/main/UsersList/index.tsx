@@ -1,7 +1,7 @@
 import { getUsers } from '@/apis/firebase';
 import Loading from '@/components/ui/Loading';
 import styles from '@/pages/Main/Main.module.scss';
-import { User } from 'firebase/auth';
+import { User } from '@/types/firebase';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -25,7 +25,7 @@ export default function UsersList() {
   }, []);
 
   if (loading) {
-    return <Loading />;
+    return <Loading fixed={false} />;
   }
 
   return (
