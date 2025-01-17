@@ -356,3 +356,21 @@ export async function removeUser(
     return fbError;
   }
 }
+
+export async function getUser(userId: string) {
+  try {
+    const userDocRef = doc(database, 'users', userId);
+    const userDocSnap = await getDoc(userDocRef);
+
+    if (userDocSnap.exists()) {
+      // console.log('Document data:', userDocSnap.data());
+      return userDocSnap.data();
+    } else {
+      toastr.error('해당 데이터를 찾을 수 없습니다.');
+      return null;
+    }
+  } catch (error) {
+    console.error('getUsers Error : ', error);
+    throw error;
+  }
+}

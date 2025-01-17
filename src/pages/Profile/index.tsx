@@ -1,13 +1,14 @@
-import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import dayjs from 'dayjs';
+import cx from 'classnames';
 import { useAuthContext } from '@/contexts/AuthContext';
 import Loading from '@/components/ui/Loading';
-import cx from 'classnames';
-import commonStyles from '@/assets/styles/common.module.scss';
-import styles from './Profile.module.scss';
-import { useQueryClient } from '@tanstack/react-query';
 import Modal from '@/components/ui/Modal';
+import { getProvider } from '@/utils';
+import commonStyles from '@/assets/styles/common.module.scss';
+import styles from '@/pages/Profile/Profile.module.scss';
 
 function Profile() {
   const queryClient = useQueryClient();
@@ -25,21 +26,6 @@ function Profile() {
 
   if (isLoading) {
     return <Loading />;
-  }
-
-  function getProvider(id: string | undefined): string {
-    switch (id) {
-      case 'password':
-        return 'General';
-      case 'google.com':
-        return 'Google';
-      case 'github.com':
-        return 'Github';
-      case 'facebook.com':
-        return 'Facebook';
-      default:
-        return '없음';
-    }
   }
 
   const handleRemoveUser = async () => {
