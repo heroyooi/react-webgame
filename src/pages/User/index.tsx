@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { getUser } from '@/apis/firebase';
-import { getProvider } from '@/utils';
 import styles from '@/pages/Profile/Profile.module.scss';
 import Loading from '@/components/ui/Loading';
 
