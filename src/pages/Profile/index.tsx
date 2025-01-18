@@ -16,7 +16,6 @@ function Profile() {
   const { user, isLoading, removeUser } = useAuthContext();
   const [showModal, setShowModal] = useState(false);
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -47,7 +46,6 @@ function Profile() {
 
   const handleSubmit = async () => {
     try {
-      setError('');
       const result = await removeUser(user?.email, password);
 
       if (result === true) {
@@ -110,7 +108,6 @@ function Profile() {
             placeholder='비밀번호'
             className={commonStyles.commonInput}
           />
-          {error && <p className={commonStyles.commonError}>{error}</p>}
           <div className={cx(commonStyles.commonBtn, styles.btnArea)}>
             <button onClick={handleSubmit}>확인</button>
             <button onClick={() => setShowModal(false)}>취소</button>
