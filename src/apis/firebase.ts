@@ -277,26 +277,6 @@ export function fetchUser(): Promise<User | null> {
   });
 }
 
-export async function getUsers(): Promise<IUser[]> {
-  const usersCollectionRef = collection(database, 'users');
-  const usersSnapshot = await getDocs(usersCollectionRef);
-
-  const users = usersSnapshot.docs.map((doc) => {
-    const data = doc.data();
-
-    return {
-      id: doc.id,
-      // ...doc.data(),
-      email: data.email || '',
-      createdAt: data.createdAt || null,
-      displayName: data.displayName || null,
-      lastLogin: data.lastLogin || null,
-    };
-  });
-
-  return users;
-}
-
 export async function removeUser(
   email?: string,
   password?: string
@@ -355,6 +335,26 @@ export async function removeUser(
 
     return fbError;
   }
+}
+
+export async function getUsers(): Promise<IUser[]> {
+  const usersCollectionRef = collection(database, 'users');
+  const usersSnapshot = await getDocs(usersCollectionRef);
+
+  const users = usersSnapshot.docs.map((doc) => {
+    const data = doc.data();
+
+    return {
+      id: doc.id,
+      // ...doc.data(),
+      email: data.email || '',
+      createdAt: data.createdAt || null,
+      displayName: data.displayName || null,
+      lastLogin: data.lastLogin || null,
+    };
+  });
+
+  return users;
 }
 
 export async function getUser(userId: string) {
