@@ -357,7 +357,8 @@ export async function getUsers(): Promise<IUser[]> {
   return users;
 }
 
-export async function getUser(userId: string) {
+// export async function getUser(userId: string) {
+export const getUser = (userId: string) => async () => {
   try {
     const userDocRef = doc(database, 'users', userId);
     const userDocSnap = await getDoc(userDocRef);

@@ -1,32 +1,38 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { getUser } from '@/apis/firebase';
 import styles from '@/pages/Profile/Profile.module.scss';
 import Loading from '@/components/ui/Loading';
+import { useQuery } from '@tanstack/react-query';
 
 function User() {
   const { uid } = useParams<{ uid: string }>();
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
+  // const [user, setUser] = useState<any>(null);
+  // const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      setLoading(true);
-      try {
-        const isUser = await getUser(uid);
-        setUser(isUser);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const {data:user, isLoading} = useQuery<any>({
+    queryKey: ['user'],
+    queryFn: getUser(uid),
+    staleTime: 300 * 1000,
+  })
 
-    fetchUser();
-  }, [uid]);
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const isUser = await getUser(uid);
+  //       setUser(isUser);
+  //     } catch (error) {
+  //       console.log(error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-  if (loading) {
+  //   fetchUser();
+  // }, [uid]);
+
+  if (isLoading) {
     return <Loading />;
   }
 
