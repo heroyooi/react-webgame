@@ -34,9 +34,9 @@ function PostDetail() {
 
   const handleDelete = async () => {
     try {
-      await deletePost(postId); // 게시글 삭제
+      await deletePost(postId);
       toastr.success('글이 삭제되었습니다.');
-      navigate('/'); // 삭제 후 목록 페이지로 리디렉션
+      navigate('/');
     } catch (err) {
       console.error(err);
       toastr.error('삭제 중 오류가 발생했습니다.');
