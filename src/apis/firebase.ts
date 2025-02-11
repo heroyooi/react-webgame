@@ -43,6 +43,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const database = getFirestore(app);
+const postsCollectionRef = collection(database, 'posts');
 
 export const socialLogin =
   (type: SocialProvider) => async (): Promise<User | null> => {
@@ -379,8 +380,6 @@ export const getUser = (userId: string) => async () => {
     throw error;
   }
 };
-
-const postsCollectionRef = collection(database, 'posts');
 
 // 게시글 추가
 export const addPost = async (title: string, content: string) => {
