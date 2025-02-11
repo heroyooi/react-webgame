@@ -15,6 +15,8 @@ export default defineConfig({
       '@pages': fileURLToPath(new URL('./src/pages', import.meta.url)),
       '@types': fileURLToPath(new URL('./src/types', import.meta.url)),
       '@apis': fileURLToPath(new URL('./src/apis', import.meta.url)),
+      '@contexts': fileURLToPath(new URL('./src/contexts', import.meta.url)),
+      // 'react-simple-toasts': '/node_modules/react-simple-toasts',
     },
   },
   css: {

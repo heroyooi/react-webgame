@@ -5,6 +5,12 @@ import App from '@/App';
 import Main from '@/pages/Main';
 import Game from '@/pages/Game';
 import NotFound from '@/pages/NotFound';
+import Login from '@/pages/Login';
+import Profile from '@/pages/Profile';
+import User from '@/pages/User';
+import PostDetail from '@/pages/PostDetail';
+import PostWrite from '@/pages/PostWrite';
+import PostEdit from '@/pages/PostEdit';
 
 const router = createBrowserRouter([
   {
@@ -13,8 +19,15 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, path: '/', element: <Main /> },
+      { path: '/login', element: <Login /> },
+      { path: '/login/:id', element: <Login /> },
       { path: '/game', element: <Game /> },
       { path: '/game/:id', element: <Game /> },
+      { path: '/profile', element: <Profile /> },
+      { path: '/user/:uid', element: <User /> },
+      { path: '/post/:postId', element: <PostDetail /> },
+      { path: '/post/write', element: <PostWrite /> },
+      { path: '/post/edit/:postId', element: <PostEdit /> },
     ],
   },
 ]);

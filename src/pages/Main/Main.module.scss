@@ -1,16 +1,22 @@
+@use "@/assets/styles/main.scss" as *;
+
 .page {
   &__message {
     font-size: 16px;
     font-weight: bold;
     text-align: center;
   }
-  &__list {
+  &__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
     margin-top: 30px;
-    li {
-      margin-top: 5px;
-      &:first-child {
-        margin-top: 0;
-      }
-    }
+  }
+  &__content { 
+    width: calc(50% - 15px);
+    @include boxStyle;
+  }
+  &__list {
+    @include listStyle;
   }
 }
