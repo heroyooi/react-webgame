@@ -13,7 +13,7 @@
       @include listStyle;
       overflow-y: auto;
       max-height: 190px;
-      &::-webkit-scrollbar{background:#373d4f;width:12px;}
+      &::-webkit-scrollbar{width:12px;}
       &::-webkit-scrollbar-track{border-radius:6px;background:transparent;}
       &::-webkit-scrollbar-thumb{background:#4c556d;border-radius:6px;background-clip:padding-box;border:3px solid transparent;}
       li {
