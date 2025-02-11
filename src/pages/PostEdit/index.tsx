@@ -5,14 +5,10 @@ import { getPostById, updatePost } from '@/apis/firebase';
 import commonStyles from '@/assets/styles/common.module.scss';
 import styles from './PostEdit.module.scss';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAuthContext } from '@/contexts/AuthContext';
-import { IPost } from '@/types/firebase';
 
 function PostEdit() {
   const navigate = useNavigate();
-  const { user } = useAuthContext();
   const { postId } = useParams();
-  const [post, setPost] = useState<IPost>(null);
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -21,7 +17,6 @@ function PostEdit() {
     const fetchPost = async () => {
       try {
         const postData = await getPostById(postId);
-        setPost(postData);
         setTitle(postData.title);
         setContent(postData.content);
       } catch (err) {
