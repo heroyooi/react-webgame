@@ -406,7 +406,7 @@ export const getPostById = async (postId): Promise<IPost> => {
   const postRef = doc(database, 'posts', postId);
   const postSnap = await getDoc(postRef);
   if (postSnap.exists()) {
-    return { id: postSnap.id, ...postSnap.data() };
+    return { id: postSnap.id, ...postSnap.data() } as IPost;
   } else {
     throw new Error('글을 찾을 수 없습니다.');
   }
