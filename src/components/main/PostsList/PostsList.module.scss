@@ -1,0 +1,38 @@
+@use "@/assets/styles/main.scss" as *;
+
+.page {
+  &__post {
+    &__nodata {
+      margin: 10px 0;
+    }
+    &__btn {
+      width: auto;
+      display: inline-block;
+    }
+    &__list {
+      @include listStyle;
+      overflow-y: auto;
+      max-height: 190px;
+      &::-webkit-scrollbar{background:#373d4f;width:12px;}
+      &::-webkit-scrollbar-track{border-radius:6px;background:transparent;}
+      &::-webkit-scrollbar-thumb{background:#4c556d;border-radius:6px;background-clip:padding-box;border:3px solid transparent;}
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        .title {
+          font-size: 14px;
+          color: #666;
+          &:hover {
+            color:#333;
+          }
+        }
+        .date {
+          font-size: 12px;
+          color: #999;
+        }
+      }
+    }
+  }
+}

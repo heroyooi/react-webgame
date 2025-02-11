@@ -16,3 +16,21 @@ a {
 input {
   outline: none;
 }
+
+@mixin boxStyle {
+  border: 1px solid #eee;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@mixin listStyle {
+  margin-top: 20px;
+  li {
+    margin-top: 5px;
+    font-size: 14px;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
