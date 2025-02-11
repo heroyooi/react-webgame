@@ -8,13 +8,14 @@ import { useQuery } from '@tanstack/react-query';
 function User() {
   const { uid } = useParams<{ uid: string }>();
   // const [user, setUser] = useState<any>(null);
+
   // const [loading, setLoading] = useState(false);
 
-  const {data:user, isLoading} = useQuery<any>({
+  const { data: user, isLoading } = useQuery<any>({
     queryKey: ['user'],
     queryFn: getUser(uid),
-    staleTime: 300 * 1000,
-  })
+    // staleTime: 300 * 1000,
+  });
 
   // useEffect(() => {
   //   const fetchUser = async () => {
